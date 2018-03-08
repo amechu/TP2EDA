@@ -1,13 +1,14 @@
 #include "parseCmd.h"
+#include "allegro.h"
 #include <iostream>
-
-using namespace std;
 
 int main(int argc, char ** argv)
 {
-	int result;
+	using namespace std;
+	int error;
 	pCallback p = parseCallback;
 	parseData parseData;
+	allegroUtils alUtils;
 
 	{//Llenando base de datos
 		parseData.key[0] = (char*) "TYPE";
@@ -38,24 +39,27 @@ int main(int argc, char ** argv)
 		parseData.programSettings.yo = 0.0;
 		parseData.programSettings.xf = 2.0;
 		parseData.programSettings.yf = 2.0;
-
 	}
 
-	result = parseCmdLine(argc, argv, p, &parseData); //Llamada al parseador de linea de comandos.
-	if (result == ERROR1)
-		cout << "Error tipo 1, se ha ingresado una opcion sin valor" << endl;
-	else if (result == ERROR2)
-		cout << "Error tipo 2, se ha ingresado una opcion sin clave" << endl;
-	else if (result == ERROR3)
-		cout << "Error tipo 3, los datos ingresados no corresponden con nuestra base de datos" << endl;
-	else if (!(settingsVerification (&parseData)))
-		cout << "Error tipo 4, parametros invalidos." << endl;
-	else
+	if (allegroInit(&alUtils))
 	{
-		cout << "anda todo piola" << endl;
+		error = parseCmdLine(argc, argv, p, &parseData); //Llamada al parseador de linea de comandos.
+
+		if (error == ERROR1)
+			cout << "Error tipo 1, se ha ingresado una opcion sin valor" << endl;
+		else if (error == ERROR2)
+			cout << "Error tipo 2, se ha ingresado una opcion sin clave" << endl;
+		else if (error == ERROR3)
+			cout << "Error tipo 3, los datos ingresados no corresponden con nuestra base de datos" << endl;
+		else if (!(settingsVerification(&parseData)))
+			cout << "Error tipo 4, parametros invalidos." << endl;
+		else
+		{
+			cout << "anda todo piola" << endl;
+		}
 	}
 
-	getchar(); //DEBUG
+	getchar(); 
 
 	return 0;
 }
