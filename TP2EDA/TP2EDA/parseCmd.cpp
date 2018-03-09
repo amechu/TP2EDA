@@ -132,7 +132,7 @@ int parseCallback(char *key, char *value, void *userinfo)
 			
 			if (convertedValue = atof(value)) //Convierte numero a floating point
 			{
-				switch (temp)
+				switch (temp) //Busca que key ha sido ingresada
 				{
 					case LSTART:
 					{
@@ -195,7 +195,7 @@ int parseCallback(char *key, char *value, void *userinfo)
 	return equal;
 }
 
-int settingsVerification(parseData* parseData)
+int settingsVerification(parseData* parseData) //Se verifican los settings ingresados (ej. angulos no paralelos)
 {
 	using namespace std;
 	bool result;
@@ -215,7 +215,7 @@ int settingsVerification(parseData* parseData)
 		cout << "LCONSTANT invalido." << endl;
 		result = false;
 	}
-	else if (!(parseData->programSettings.leftAngle >= -90.0 && parseData->programSettings.leftAngle <= 90.0 && (parseData->programSettings.leftAngle != (-(parseData->programSettings.rightAngle)))))
+	else if (!(parseData->programSettings.leftAngle > -90.0 && parseData->programSettings.leftAngle < 90.0 && (parseData->programSettings.leftAngle != (-(parseData->programSettings.rightAngle)))))
 	{
 		cout << "Angulos invalidos." << endl;
 		result = false;

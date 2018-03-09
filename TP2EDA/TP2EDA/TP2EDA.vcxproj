@@ -125,11 +125,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="allegro.cpp" />
+    <ClCompile Include="gen.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="parseCmd.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allegro.h" />
+    <ClInclude Include="gen.h" />
     <ClInclude Include="parseCmd.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

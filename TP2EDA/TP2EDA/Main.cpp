@@ -1,5 +1,6 @@
 #include "parseCmd.h"
 #include "allegro.h"
+#include "gen.h"
 #include <iostream>
 
 int main(int argc, char ** argv)
@@ -55,11 +56,31 @@ int main(int argc, char ** argv)
 			cout << "Error tipo 4, parametros invalidos." << endl;
 		else
 		{
-			cout << "anda todo piola" << endl;
+
+			switch (parseData.programSettings.fractalType)
+			{
+				case UNIFORME:
+				{
+					generateUniforme(&parseData, &alUtils);
+				}
+				case OCTOGONO:
+				{
+					generateOctogono(&parseData, &alUtils);
+				}
+				case MANDELBROT:
+				{
+					generateMandelbrot(&parseData, &alUtils);
+				}
+			}
 		}
 	}
 
-	getchar(); 
+	else
+	{
+		cout << "Error, cerrando programa.." << endl;
+	}
 
+	allegroDestroy(&alUtils);
+	
 	return 0;
 }

@@ -27,12 +27,18 @@
     <ClCompile Include="allegro.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="parseCmd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="allegro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

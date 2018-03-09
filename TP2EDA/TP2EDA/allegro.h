@@ -7,6 +7,7 @@
 #define SCREENWIDTH 800
 #define SCREENHEIGHT 600
 
+//TYPEDEFS
 typedef struct 
 {
 		ALLEGRO_DISPLAY* display;
@@ -15,3 +16,7 @@ typedef struct
 		double timerSpeed;
 
 }allegroUtils;
+
+//DECLARATIONS
+bool allegroInit(allegroUtils*);
+void allegroDestroy(allegroUtils*);
