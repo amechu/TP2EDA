@@ -7,7 +7,7 @@
 
 #define X_MAX	600.0
 #define Y_MAX	600.0
-#define N_MAX   255
+#define N_MAX   255.0
 #define X_PASO  ((2 - (-2))/X_MAX)      // EN LUGAR DE 2 Y -2 IRIAN LOS argv[]
 #define Y_PASO  ((2 - (-2))/Y_MAX)
 #define RADIO   2                       // NO SE EL RADIO CUAL SERIA
@@ -54,7 +54,7 @@ int main(void)      //void mandelbrot(double -2, double 2, double -2, double 2)
    al_clear_to_color(al_color_name("black"));
    al_flip_display();
    
-   int cont = 0;
+   int cont = 0;			//ACA VAN A IR LOS argv{}
    double Xo = -2.0;
    double Xf = 2.0;
    double Yo = -2.0;
@@ -69,7 +69,7 @@ int main(void)      //void mandelbrot(double -2, double 2, double -2, double 2)
        {
            n = get_num_it(Zo + i*X_PASO + j*Y_PASO*I, Zo + i*X_PASO + j*Y_PASO*I, &cont);
            cont = 0;
-           al_draw_filled_rectangle(i, j, i+1, j+1, al_map_rgb(0,0,N_MAX - n));
+           al_draw_filled_rectangle(i, j, i+1, j+1, al_map_rgb(0,0,(int)(255*pow((N_MAX - n)/N_MAX,8))));
        }
    }
    al_flip_display();
