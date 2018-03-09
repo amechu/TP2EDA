@@ -29,8 +29,6 @@ bool allegroInit(allegroUtils* alUtils)
 		outcome = false;
 	}
 
-	al_register_event_source(alUtils->eventqueue, al_get_display_event_source(alUtils->display));
-	al_register_event_source(alUtils->eventqueue, al_get_timer_event_source(alUtils->timer));
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_flip_display();
 

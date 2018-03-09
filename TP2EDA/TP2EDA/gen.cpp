@@ -5,6 +5,7 @@ void generateUniforme(parseData* myData, allegroUtils* alUtils)
 	float vertices[] = { 2,2,36,36,4,100 };
 
 	al_draw_polygon(vertices, 3, ALLEGRO_LINE_JOIN_NONE, al_map_rgb(32, 51, 51), 2, 1);
+	al_flip_display();
 	al_rest(20);
 }
 
