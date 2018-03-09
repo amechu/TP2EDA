@@ -20,7 +20,7 @@ int main(void)      //void mandelbrot(double -2, double 2, double -2, double 2)
     
     
     
-    /*********************** INICIALISO TODO***************************/
+    /*********************** INICIALIZO TODO***************************/
     
     
     
@@ -67,12 +67,9 @@ int main(void)      //void mandelbrot(double -2, double 2, double -2, double 2)
    {
        for (j = 0; j < Y_MAX; j++)
        {
-           //printf("Z = %f + %f*i\n",creal(Zo + i*X_PASO + j*Y_PASO*I), cimag(Zo + i*X_PASO + j*Y_PASO*I));
            n = get_num_it(Zo + i*X_PASO + j*Y_PASO*I, Zo + i*X_PASO + j*Y_PASO*I, &cont);
            cont = 0;
            al_draw_filled_rectangle(i, j, i+1, j+1, al_map_rgb(0,0,N_MAX - n));
-           if(n>5)
-           printf("n = %d\n",n);
        }
    }
    al_flip_display();
