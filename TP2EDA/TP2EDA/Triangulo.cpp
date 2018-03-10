@@ -126,8 +126,8 @@ void recursiva(float Ax, float Ay, float Bx, float By, float Cx, float Cy, float
 	float Nuevo_CentroX;
 	float Nuevo_CentroY;
 
-	if ((sqrt((Bx - Ax) + (By - Ay)) < IEnd) || (sqrt((Cx - Ax) + (Cy - Ay)) < IEnd) || (sqrt((Bx - Cx) + (By - Cy)) < IEnd)) //Condicion para 
-														//parar la recursiva
+if ((sqrt(pow(Bx - Ax, 2) + pow(By - Ay, 2)) < IEnd) || (sqrt(pow(Cx - Ax, 2) + pow(Cy - Ay, 2)) < IEnd) || (sqrt(pow(Bx - Cx, 2) + pow(By - Cy, 2)) < IEnd))
+	//Condición para la recursiva, que ningun lado sea menor al dato IEnd
 	{
 		caso_base = 1;
 	}
