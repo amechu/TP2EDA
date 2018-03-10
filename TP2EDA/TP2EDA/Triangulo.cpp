@@ -2,7 +2,7 @@
 
 #include <stdio.h> 
 #include <stdlib.h> 
-#include <allegro5/allegro.h> // LibrerÌa inicial de Allegro 
+#include <allegro5/allegro.h> // Librer√≠a inicial de Allegro 
 #include <allegro5/allegro_primitives.h> // Addon de primitivas (figuras)
 #include <math.h> //Para usar trigonometria
 #define VENTANA_X 800
@@ -29,7 +29,7 @@ void inicializar(void)
 		exit(-2);
 	}
 
-	dis = al_create_display(VENTANA_X, VENTANA_Y); // Crear el display de tamaÒo 500x300 pÌxeles
+	dis = al_create_display(VENTANA_X, VENTANA_Y); // Crear el display de tama√±o 500x300 p√≠xeles
 
 	
 }
@@ -75,28 +75,28 @@ int main(void)
 
 	/////////////////////////////////////////////////////////
 
-	/*Cada vez que se utilice una funciÛn trigonomÈtrica, al ·ngulo se lo dividir· por 57,3 para expresarlo en radianes, ya que la librerÌa math.h
-	sÛlo acepta los ·ngulos en radianes.*/
+	/*Cada vez que se utilice una funci√≥n trigonom√©trica, al √°ngulo se lo dividir√° por 57,3 para expresarlo en radianes, ya que la librer√≠a math.h
+	s√≥lo acepta los √°ngulos en radianes.*/
 
-	angulo_S = 180 - angulo_D - angulo_I;	//La suma de los ·ngulos internos de un tri·ngulo da 180∞
+	angulo_S = 180 - angulo_D - angulo_I;	//La suma de los √°ngulos internos de un tri√°ngulo da 180¬∞
 
-	lado_izquierdo = (lado_base / sin(angulo_S/ 57.3)) * sin(angulo_D / 57.3);	// En un tri·ngulo, la "Regla de los Senos" dice que:
-																				//(lado1/sen(·ngulo1)) = (lado2/sen(·ngulo2)) = (lado3/sen(·ngulo3))
+	lado_izquierdo = (lado_base / sin(angulo_S/ 57.3)) * sin(angulo_D / 57.3);	// En un tri√°ngulo, la "Regla de los Senos" dice que:
+																				//(lado1/sen(√°ngulo1)) = (lado2/sen(√°ngulo2)) = (lado3/sen(√°ngulo3))
 	lado_derecho = (lado_base / sin(angulo_S / 57.3)) * sin(angulo_I / 57.3);	//https://www.mathsisfun.com/algebra/trig-sine-law.html
-																				//Advertencia: no malinterpretar el nombre de la regla al traducirla al espaÒol
+																				//Advertencia: no malinterpretar el nombre de la regla al traducirla al espa√±ol
 
 	Dx = Ix + lado_base;
-	Dy = Iy;	//Por interpretaciÛn de consigna, la base siempre ser· horizontal, por lo que las coordenada "Y" ser·n iguales.
+	Dy = Iy;	//Por interpretaci√≥n de consigna, la base siempre ser√° horizontal, por lo que las coordenada "Y" ser√°n iguales.
 
-	Sx = Ix + cos(angulo_I / 57.3) * lado_izquierdo;	//Consideramos que la base que es dada como dato deberÌa ser la parte inferior del tri·ngulo (para
-	Sy = Iy - sin(angulo_I / 57.3) * lado_izquierdo;	//que se viera igual que el tri·ngulo del ejemplo de la consigna). Debido a esto, se suma el coseno
+	Sx = Ix + cos(angulo_I / 57.3) * lado_izquierdo;	//Consideramos que la base que es dada como dato deber√≠a ser la parte inferior del tri√°ngulo (para
+	Sy = Iy - sin(angulo_I / 57.3) * lado_izquierdo;	//que se viera igual que el tri√°ngulo del ejemplo de la consigna). Debido a esto, se suma el coseno
 														//y se resta el seno.
 														
 		CentroX = (Ix + Dx + Sx) / 3;
 		CentroY = (Iy + Dy + Sy) / 3;
 
 
-	al_draw_line(Ix, Iy, Dx, Dy, al_map_rgba(0, 255, 255, 255), 1);			//Dibujo el tri·ngulo inicial
+	al_draw_line(Ix, Iy, Dx, Dy, al_map_rgba(0, 255, 255, 255), 1);			//Dibujo el tri√°ngulo inicial
 	al_draw_line(Ix, Iy, Sx, Sy, al_map_rgba(255, 0, 0, 50), 1);
 	al_draw_line(Dx, Dy, Sx, Sy, al_map_rgba(255, 255, 255, 255), 1);
 	
@@ -126,7 +126,8 @@ void recursiva(float Ax, float Ay, float Bx, float By, float Cx, float Cy, float
 	float Nuevo_CentroX;
 	float Nuevo_CentroY;
 
-	if ((sqrt((Bx - Ax) + (By - Ay)) < IEnd) || (sqrt((Cx - Ax) + (Cy - Ay)) < IEnd) || (sqrt((Bx - Cx) + (By - Cy)) < IEnd))
+	if ((sqrt((Bx - Ax) + (By - Ay)) < IEnd) || (sqrt((Cx - Ax) + (Cy - Ay)) < IEnd) || (sqrt((Bx - Cx) + (By - Cy)) < IEnd)) //Condicion para 
+														//parar la recursiva
 	{
 		caso_base = 1;
 	}
