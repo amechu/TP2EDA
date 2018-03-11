@@ -3,6 +3,8 @@
 #include "allegro5\allegro_primitives.h"
 #include "allegro5\allegro_image.h"
 #include "allegro5\allegro_color.h"
+#include "allegro5\allegro_audio.h"
+#include "allegro5\allegro_acodec.h"
 
 #define SCREENWIDTH 800
 #define SCREENHEIGHT 600
@@ -11,9 +13,8 @@
 typedef struct 
 {
 		ALLEGRO_DISPLAY* display;
-		ALLEGRO_EVENT_QUEUE* eventqueue;
-		ALLEGRO_TIMER* timer;
-		double timerSpeed;
+		ALLEGRO_SAMPLE* sample;
+		ALLEGRO_SAMPLE_ID sampleId;
 
 }allegroUtils;
 

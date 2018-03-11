@@ -15,9 +15,32 @@ bool allegroInit(allegroUtils* alUtils)
 		outcome = false;
 	}
 
+	if (!al_install_audio()) {
+		cout << "Falla al inicializar audio." << endl;
+		return -1;
+	}
+
+	if (!al_init_acodec_addon()) {
+		cout << "Falla al inicializar acodec." << endl;
+		return -1;
+	}
+
+	if (!al_reserve_samples(1)) {
+		cout << "Falla al reservar samples." << endl;
+		return -1;
+	}
+
+	alUtils->sample = al_load_sample("macintosh_plus.wav");
+	if (!alUtils->sample) {
+		cout << "Falla al inicializar sample." << endl;
+		al_destroy_sample(alUtils->sample);
+		return -1;
+	}
+
 	if (!al_init_primitives_addon())
 	{
 		cout << "Falla al inicializar primitivas." << endl;
+		al_destroy_sample(alUtils->sample);
 		outcome = false;
 	}
 
@@ -26,6 +49,7 @@ bool allegroInit(allegroUtils* alUtils)
 	{
 		cout << "Falla al inicializar display." << endl;	
 		al_shutdown_primitives_addon();
+		al_destroy_sample(alUtils->sample);
 		outcome = false;
 	}
 
@@ -38,6 +62,8 @@ bool allegroInit(allegroUtils* alUtils)
 void allegroDestroy(allegroUtils* alUtils)
 {
 	al_destroy_display(alUtils->display);
+	al_shutdown_primitives_addon();
+	al_destroy_sample(alUtils->sample);
 
 	return;
 

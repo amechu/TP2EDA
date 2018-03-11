@@ -1,8 +1,8 @@
-#include "parseCmd.h"
 #include <string.h>
 #include <fwpstypes.h>
 #include <stdio.h>
 #include <iostream>
+#include "parseCmd.h"
 
 int parseCmdLine(int argc, char *argv[], pCallback p, void *parseData) {
 	int final = 0, posible = 0, error = false;
@@ -179,6 +179,8 @@ int parseCallback(char *key, char *value, void *userinfo)
 						userInfo->programSettings.yf = convertedValue;
 						break;
 					}
+					case N:
+						userInfo->programSettings.n = convertedValue;
 				}
 			}
 
@@ -205,7 +207,7 @@ int settingsVerification(parseData* parseData) //Se verifican los settings ingre
 		cout << "LSTART invalido." << endl;
 		result = false;
 	}
-	else if (!(parseData->programSettings.lEnd > 0.0 && parseData->programSettings.lEnd <= 100.0 && parseData->programSettings.lEnd > parseData->programSettings.lStart))
+	else if (!(parseData->programSettings.lEnd > 0.0 && parseData->programSettings.lEnd <= 100.0 && parseData->programSettings.lEnd < parseData->programSettings.lStart))
 	{
 		cout << "LEND invalido." << endl;
 		result = false;
@@ -223,6 +225,11 @@ int settingsVerification(parseData* parseData) //Se verifican los settings ingre
 	else if (!(parseData->programSettings.rightAngle > -90.0 && parseData->programSettings.rightAngle <= 90.0 && (parseData->programSettings.leftAngle != (-(parseData->programSettings.rightAngle)))))
 	{
 		cout << "Angulos invalidos." << endl;
+		result = false;
+	}
+	else if (!(parseData->programSettings.n >= 3 && parseData->programSettings.n <= 12))
+	{
+		cout << "n invalido." << endl;
 		result = false;
 	}
 	

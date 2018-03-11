@@ -1,12 +1,13 @@
-#include "parseCmd.h"
 #include "allegro.h"
 #include "gen.h"
+#include "parseCmd.h"
 #include <iostream>
 
 int main(int argc, char ** argv)
 {
 	using namespace std;
 	int error;
+	float vert[MAX_VERT] = { 0 };
 	pCallback p = parseCallback;
 	parseData parseData;
 	allegroUtils alUtils;
@@ -22,24 +23,27 @@ int main(int argc, char ** argv)
 		parseData.key[7] = (char*) "YO";
 		parseData.key[8] = (char*) "XF";
 		parseData.key[9] = (char*) "YF";
+		parseData.key[10] = (char*) "N";
 
 		parseData.value[0] = (char*) "UNIFORME";
-		parseData.value[1] = (char*) "OCTOGONO";
+		parseData.value[1] = (char*) "POLIGONO";
 		parseData.value[2] = (char*) "MANDELBROT";
 
 		parseData.parameters[0] = (char*) "NOAUDIO";
 
 		//Default program settings
-		parseData.programSettings.fractalType = UNIFORME;
-		parseData.programSettings.lStart = 0.1;
-		parseData.programSettings.lEnd = 100.0;
-		parseData.programSettings.lConstant = 0.01;
+		parseData.programSettings.fractalType = POLIGONO;
+		parseData.programSettings.lStart = 100;
+		parseData.programSettings.lEnd = 0.1;
+		parseData.programSettings.lConstant = 0.4;
 		parseData.programSettings.leftAngle = 30.0;
 		parseData.programSettings.rightAngle = 30.0;
-		parseData.programSettings.xo = 0.0;
-		parseData.programSettings.yo = 0.0;
+		parseData.programSettings.xo = 0;
+		parseData.programSettings.yo = 0;
 		parseData.programSettings.xf = 2.0;
 		parseData.programSettings.yf = 2.0;
+		parseData.programSettings.n = 5;
+
 	}
 
 	if (allegroInit(&alUtils))
@@ -61,15 +65,18 @@ int main(int argc, char ** argv)
 			{
 				case UNIFORME:
 				{
-					generateUniforme(&parseData, &alUtils);
+					break;
 				}
-				case OCTOGONO:
+				case POLIGONO:
 				{
-					generateOctogono(&parseData, &alUtils);
+					al_play_sample(alUtils.sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, &(alUtils.sampleId));
+					generatePolygons(&parseData, &alUtils, SCREENWIDTH/2, SCREENHEIGHT/2, parseData.programSettings.lStart, 150, 20, 20, 3);
+					al_stop_sample(&(alUtils.sampleId));
+					break;
 				}
 				case MANDELBROT:
 				{
-					generateMandelbrot(&parseData, &alUtils);
+					break;
 				}
 			}
 		}
@@ -79,7 +86,7 @@ int main(int argc, char ** argv)
 	{
 		cout << "Error, cerrando programa.." << endl;
 	}
-
+	getchar();
 	allegroDestroy(&alUtils);
 	
 	return 0;
