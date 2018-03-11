@@ -46,9 +46,9 @@ void generatePolygons(parseData* myData, allegroUtils* alUtils, float xo, float 
 
 		//Achico lado
 		length = (length*(myData->programSettings.lConstant));
-		green += 20;
-		red += 10;
-		blue += 20;
+		green -= 20;
+		red -= 10;
+		blue -= 20;
 		if (thickness > 0)
 			thickness -= 1;
 		for (int i = 0; i < myData->programSettings.n; i++)

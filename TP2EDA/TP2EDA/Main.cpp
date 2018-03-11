@@ -34,15 +34,15 @@ int main(int argc, char ** argv)
 		//Default program settings
 		parseData.programSettings.fractalType = POLIGONO;
 		parseData.programSettings.lStart = 100;
-		parseData.programSettings.lEnd = 0.1;
-		parseData.programSettings.lConstant = 0.4;
+		parseData.programSettings.lEnd = 1;
+		parseData.programSettings.lConstant = 0.45;
 		parseData.programSettings.leftAngle = 30.0;
 		parseData.programSettings.rightAngle = 30.0;
 		parseData.programSettings.xo = 0;
 		parseData.programSettings.yo = 0;
 		parseData.programSettings.xf = 2.0;
 		parseData.programSettings.yf = 2.0;
-		parseData.programSettings.n = 5;
+		parseData.programSettings.n = 6;
 
 	}
 
@@ -70,7 +70,7 @@ int main(int argc, char ** argv)
 				case POLIGONO:
 				{
 					al_play_sample(alUtils.sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, &(alUtils.sampleId));
-					generatePolygons(&parseData, &alUtils, SCREENWIDTH/2, SCREENHEIGHT/2, parseData.programSettings.lStart, 150, 20, 20, 3);
+					generatePolygons(&parseData, &alUtils, SCREENWIDTH/2, SCREENHEIGHT/2, parseData.programSettings.lStart, 40, 150, 150, 3);
 					al_stop_sample(&(alUtils.sampleId));
 					break;
 				}
