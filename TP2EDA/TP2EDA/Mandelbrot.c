@@ -91,7 +91,6 @@ int get_num_it(double complex z, double complex z0, int *cont)
     if (sqrt(creal(z)*creal(z) + cimag(z)*cimag(z)) >= RADIO) // CASO BASE
     {
         return 0;
-        
     }
     else if (*cont == N_MAX)  // el punto diverge
     {
