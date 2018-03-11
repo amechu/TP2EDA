@@ -10,7 +10,7 @@
 #define N_MAX   255.0
 #define X_PASO  ((2 - (-2))/X_MAX)      // EN LUGAR DE 2 Y -2 IRIAN LOS argv[]
 #define Y_PASO  ((2 - (-2))/Y_MAX)
-#define RADIO   2                       // NO SE EL RADIO CUAL SERIA
+#define RADIO   2                       // QUE EL RADIO SE MODIFIQUE SEGUN LOS argv[]
 
 int get_num_it(double complex z, double complex z0, int *cont);
 
@@ -47,6 +47,7 @@ int main(void)      //void mandelbrot(double -2, double 2, double -2, double 2)
       return -1;
    }
    
+	
    
    /**********************TODO INICIADO*****************************/
    
@@ -54,8 +55,8 @@ int main(void)      //void mandelbrot(double -2, double 2, double -2, double 2)
    al_clear_to_color(al_color_name("black"));
    al_flip_display();
    
-   int cont = 0;			//ACA VAN A IR LOS argv{}
-   double Xo = -2.0;
+   int cont = 0;
+   double Xo = -2.0;    //LES ASIGNAMOS LOS VALORES POR LINEA DE COMANDO, OSEA QUE HAY QUE MODIFICAR ESTO
    double Xf = 2.0;
    double Yo = -2.0;
    double Yf = 2.0;
@@ -69,11 +70,15 @@ int main(void)      //void mandelbrot(double -2, double 2, double -2, double 2)
        {
            n = get_num_it(Zo + i*X_PASO + j*Y_PASO*I, Zo + i*X_PASO + j*Y_PASO*I, &cont);
            cont = 0;
-           al_draw_filled_rectangle(i, j, i+1, j+1, al_map_rgb(0,0,(int)(255*pow((N_MAX - n)/N_MAX,8))));
+           if(n == N_MAX)     //diverge -> negro
+               al_draw_filled_rectangle(i, j, i+1, j+1, al_map_rgb(0,0,(int)(N_MAX*pow((N_MAX - n)/N_MAX,2))));   //hacemos un juego con valores exponenciales (no lineales) para generar un mejor efecto visual
+           else
+               al_draw_filled_rectangle(i, j, i+1, j+1, al_map_rgb((int)(N_MAX-N_MAX*pow((N_MAX - n)/N_MAX,6)),((int)(N_MAX-N_MAX*pow((N_MAX - n)/N_MAX,6))),(int)(N_MAX*pow((N_MAX - n)/N_MAX,2))));
+           
        }
    }
    al_flip_display();
-   al_rest(5.0);
+   al_rest(10.0);
    
    al_destroy_display(display);
    al_shutdown_primitives_addon();
@@ -88,14 +93,15 @@ int get_num_it(double complex z, double complex z0, int *cont)
         return 0;
         
     }
-    else if (*cont == 255)
+    else if (*cont == N_MAX)  // el punto diverge
     {
         return 0;   //para sacar todo lo que estuvimos acumulando por las iteraciones
     }
     else                // CASO RECURSIVO
     {
         z = z*z + z0;
-        (*cont)++;
+        (*cont)++;	//contador de iteraciones
         return 1 + get_num_it(z, z0, cont);
     }
 }
+
