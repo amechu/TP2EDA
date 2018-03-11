@@ -13,8 +13,13 @@
 typedef struct 
 {
 		ALLEGRO_DISPLAY* display;
-		ALLEGRO_SAMPLE* sample;
-		ALLEGRO_SAMPLE_ID sampleId;
+		ALLEGRO_SAMPLE* sample_mac;
+		ALLEGRO_SAMPLE_ID sampleId_mac;
+		ALLEGRO_SAMPLE* sample_fart;
+		ALLEGRO_SAMPLE_ID sampleId_fart;
+		ALLEGRO_SAMPLE* sample_ofortuna;
+		ALLEGRO_SAMPLE_ID sampleId_ofortuna;
+
 
 }allegroUtils;
 

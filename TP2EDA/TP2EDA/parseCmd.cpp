@@ -77,8 +77,11 @@ int parseCallback(char *key, char *value, void *userinfo)
 		for (i = 0; i < NPARAMETERS; i++) //Busca parametro conocido
 		{
 			equal = strcmp(val, userInfo->parameters[i]);
-			if (equal == 0)
+			if (equal == NOAUDIO)
+			{
+				userInfo->programSettings.audio = false;
 				i = NPARAMETERS;
+			}
 		}
 	}
 	else
@@ -122,6 +125,30 @@ int parseCallback(char *key, char *value, void *userinfo)
 				if (equal == 0)
 				{
 					userInfo->programSettings.fractalType = i; //Asigna tipo de fractal a programSettings
+					if (userInfo->programSettings.fractalType == POLIGONO)
+					{
+						//Default program settings
+						userInfo->programSettings.lStart = 100;
+						userInfo->programSettings.lEnd = 1;
+						userInfo->programSettings.lConstant = 0.45;
+						userInfo->programSettings.n = 6;
+					}
+					else if (userInfo->programSettings.fractalType == UNIFORME)
+					{
+						//Default program settings
+						userInfo->programSettings.lStart = 100;
+						userInfo->programSettings.lEnd = 12;
+						userInfo->programSettings.leftAngle = 60;
+						userInfo->programSettings.rightAngle = 60;
+					}
+					else
+					{
+						//Default program settings
+						userInfo->programSettings.xo = -2;
+						userInfo->programSettings.yo = -2;
+						userInfo->programSettings.xf = 2;
+						userInfo->programSettings.yf = 2;
+					}
 					i = 3;
 				}
 			}
@@ -129,8 +156,63 @@ int parseCallback(char *key, char *value, void *userinfo)
 
 		else if (setsParameter == true) //Busca si la value es correcta y no se escapa del rango
 		{
-			
-			if (convertedValue = atof(value)) //Convierte numero a floating point
+			if (value[0] == '0')
+			{
+				switch (temp)
+				{
+					case LSTART:
+					{
+						userInfo->programSettings.lStart = 0;
+						break;
+					}
+					case LEND:
+					{
+						userInfo->programSettings.lEnd = 0;
+						break;
+					}
+					case LCONSTANT:
+					{
+						userInfo->programSettings.lConstant = 0;
+						break;
+					}
+					case LEFTANGLE:
+					{
+						userInfo->programSettings.leftAngle = 0;
+						break;
+					}
+					case RIGHTANGLE:
+					{
+						userInfo->programSettings.rightAngle = 0;
+						break;
+					}
+					case XO:
+					{
+						userInfo->programSettings.xo = 0;
+						break;
+					}
+					case YO:
+					{
+						userInfo->programSettings.yo = 0;
+						break;
+					}
+					case XF:
+					{
+						userInfo->programSettings.xf = 0;
+						break;
+					}
+					case YF:
+					{
+						userInfo->programSettings.yf = 0;
+						break;
+					}
+					case N:
+					{
+						userInfo->programSettings.n = 0;
+						break;
+					}
+				}
+			}
+			else if (convertedValue = atof(value)) //Convierte numero a floating point
 			{
 				switch (temp) //Busca que key ha sido ingresada
 				{
@@ -180,7 +262,10 @@ int parseCallback(char *key, char *value, void *userinfo)
 						break;
 					}
 					case N:
+					{
 						userInfo->programSettings.n = convertedValue;
+						break;
+					}
 				}
 			}
 
@@ -200,41 +285,107 @@ int parseCallback(char *key, char *value, void *userinfo)
 int settingsVerification(parseData* parseData) //Se verifican los settings ingresados (ej. angulos no paralelos)
 {
 	using namespace std;
-	bool result;
+	bool result = true;
 
-	if (!(parseData->programSettings.lStart > 0.0 && parseData->programSettings.lStart <= 100.0))
+	if (parseData->programSettings.fractalType == POLIGONO)
 	{
-		cout << "LSTART invalido." << endl;
-		result = false;
+		if (!(parseData->programSettings.lStart > 0.0 && parseData->programSettings.lStart <= 100.0))
+		{
+			cout << "LSTART invalido." << endl;
+			result = false;
+		}
+		else if (!(parseData->programSettings.lEnd > 0.0 && parseData->programSettings.lEnd <= 100.0 && parseData->programSettings.lEnd < parseData->programSettings.lStart))
+		{
+			cout << "LEND invalido." << endl;
+			result = false;
+		}
+		else if (!(parseData->programSettings.lConstant > 0.0 && parseData->programSettings.lConstant < 1.0))
+		{
+			cout << "LCONSTANT invalido." << endl;
+			result = false;
+		}
+		else if (!(parseData->programSettings.n >= 3 && parseData->programSettings.n <= 25))
+		{
+			cout << "N invalido." << endl;
+			result = false;
+		}
+		else if (parseData->programSettings.leftAngle != 0 || parseData->programSettings.rightAngle != 0)
+		{
+			cout << "Angulos no corresponden." << endl;
+			result = false;
+		}
+		else if (parseData->programSettings.xo != 0 || parseData->programSettings.yo != 0 || parseData->programSettings.xf != 0 || parseData->programSettings.yf != 0)
+		{
+			cout << "Coordinadas iniciales/finales no corresponden." << endl;
+			result = false;
+		}
 	}
-	else if (!(parseData->programSettings.lEnd > 0.0 && parseData->programSettings.lEnd <= 100.0 && parseData->programSettings.lEnd < parseData->programSettings.lStart))
+	else if(parseData->programSettings.fractalType == UNIFORME)
 	{
-		cout << "LEND invalido." << endl;
-		result = false;
+		if (!(parseData->programSettings.lStart > 0.0 && parseData->programSettings.lStart <= 100.0))
+		{
+			cout << "LSTART invalido." << endl;
+			result = false;
+		}
+		else if (!(parseData->programSettings.lEnd > 0.0 && parseData->programSettings.lEnd <= 100.0 && parseData->programSettings.lEnd < parseData->programSettings.lStart))
+		{
+			cout << "LEND invalido." << endl;
+			result = false;
+		}
+		else if (!(parseData->programSettings.leftAngle > 0.0 && parseData->programSettings.leftAngle <= 90.0))
+		{
+			cout << "Angulos invalidos." << endl;
+			result = false;
+		}
+		else if (!(parseData->programSettings.rightAngle > 0.0 && parseData->programSettings.rightAngle <= 90.0 && (!((parseData->programSettings.leftAngle == 90.0) && (parseData->programSettings.rightAngle == 90.0)))))
+		{
+			cout << "Angulos invalidos." << endl;
+			result = false;
+		}
+		else if (parseData->programSettings.lConstant != 0)
+		{
+			cout << "LCONSTANT no corresponde." << endl;
+			result = false;
+		}
+		else if (parseData->programSettings.n != 0)
+		{
+			cout << "N no corresponde." << endl;
+			result = false;
+		}
+		else if (parseData->programSettings.xo != 0 || parseData->programSettings.yo != 0 || parseData->programSettings.xf != 0 || parseData->programSettings.yf != 0)
+		{
+			cout << "Coordinadas iniciales/finales no corresponden." << endl;
+			result = false;
+		}
 	}
-	else if (!(parseData->programSettings.lConstant > 0.0 && parseData->programSettings.lConstant < 1.0))
+	else if (parseData->programSettings.fractalType == MANDELBROT)
 	{
-		cout << "LCONSTANT invalido." << endl;
-		result = false;
+		if (parseData->programSettings.lStart != 0)
+		{
+			cout << "LSTART no corresponde." << endl;
+			result = false;
+		}
+		else if (parseData->programSettings.lEnd != 0)
+		{
+			cout << "LEND no corresponde." << endl;
+			result = false;
+		}
+		else if (parseData->programSettings.lConstant != 0)
+		{
+			cout << "LCONSTANT no corresponde." << endl;
+			result = false;
+		}
+		else if (parseData->programSettings.leftAngle != 0 || parseData->programSettings.rightAngle != 0)
+		{
+			cout << "Angulos no corresponden." << endl;
+			result = false;
+		}
+		else if (parseData->programSettings.n != 0)
+		{
+			cout << "N no corresponde." << endl;
+			result = false;
+		}
 	}
-	else if (!(parseData->programSettings.leftAngle > -90.0 && parseData->programSettings.leftAngle < 90.0 && (parseData->programSettings.leftAngle != (-(parseData->programSettings.rightAngle)))))
-	{
-		cout << "Angulos invalidos." << endl;
-		result = false;
-	}
-	else if (!(parseData->programSettings.rightAngle > -90.0 && parseData->programSettings.rightAngle <= 90.0 && (parseData->programSettings.leftAngle != (-(parseData->programSettings.rightAngle)))))
-	{
-		cout << "Angulos invalidos." << endl;
-		result = false;
-	}
-	else if (!(parseData->programSettings.n >= 3 && parseData->programSettings.n <= 12))
-	{
-		cout << "n invalido." << endl;
-		result = false;
-	}
-	
-	else
-		result = true;
 
 	return result;
 }

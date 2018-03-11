@@ -8,8 +8,9 @@
 #define NKEYS 11
 #define NVALUES 3 //Puede cambiarse el numero para la cantidad de parametros, claves y valores que se deseen
 enum { ERROR1 = -1, ERROR2 = -2, ERROR3 = -3 }; //error 1 es opcion sin valor, error 2 es opcion sin clave error3 es no encontrado
-enum {UNIFORME, POLIGONO, MANDELBROT}; //values no numericas
+enum {UNIFORME, POLIGONO, MANDELBROT, NONECHOSEN}; //values no numericas
 enum {FRACTALTYPE,LSTART,LEND,LCONSTANT,LEFTANGLE,RIGHTANGLE,XO,YO,XF,YF,N}; //Tipos de clave
+enum {NOAUDIO}; //Tipos de parametro
 
 //TYPEDEF
 typedef int(*pCallback) (char *, char*, void *);
@@ -26,6 +27,7 @@ typedef struct
 	double xf;
 	double yf;
 	double n;
+	bool audio;
 
 }programsettings;
 typedef struct

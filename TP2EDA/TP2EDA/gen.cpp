@@ -13,7 +13,6 @@ void calculateVertices(parseData* myData, float vert[MAX_VERT], float xo, float 
 {
 	float r = (length) / (2 * (sin(M_PI / myData->programSettings.n)));
 	float alpha = (2 * M_PI / myData->programSettings.n);
-	int h;
 
 	for (int i = 0, h = 1; i < 2 * myData->programSettings.n; i += 2)
 	{
@@ -28,7 +27,7 @@ void calculateVertices(parseData* myData, float vert[MAX_VERT], float xo, float 
 	}
 }
 
-void generatePolygons(parseData* myData, allegroUtils* alUtils, float xo, float yo, float length, int red, int green, int blue, int thickness)
+void generatePolygons(parseData* myData, float xo, float yo, float length, int red, int green, int blue, int thickness)
 {
 
 	
@@ -53,7 +52,7 @@ void generatePolygons(parseData* myData, allegroUtils* alUtils, float xo, float 
 			thickness -= 1;
 		for (int i = 0; i < myData->programSettings.n; i++)
 		{
-			generatePolygons(myData, alUtils, vert[2*i], vert[2*i+1], length, red, green, blue, thickness); //Calcula la proxima generacion
+			generatePolygons(myData, vert[2*i], vert[2*i+1], length, red, green, blue, thickness); //Calcula la proxima generacion
 		}
 	}
 
@@ -61,4 +60,75 @@ void generatePolygons(parseData* myData, allegroUtils* alUtils, float xo, float 
 	al_rest(myData->programSettings.lEnd * myData->programSettings.lConstant * 0.001);
 
 	return;
+}
+
+void generateUniforme(parseData* myData, float Ax, float Ay, float Bx, float By, float Cx, float Cy, int red, int green, int blue, int thickness, int rec_count)
+{
+	float vert[TRIANGLE_COORDS] = { Ax,Ay,Bx,By,Cx,Cy };
+	float end = myData->programSettings.lEnd * SIZE_ADJUST;
+	float centerX = (Ax + Bx + Cx) / 3;
+	float centerY = (Ay + By + Cy) / 3;
+	
+	if((sqrt(pow(Cx - centerX, 2) + pow(Cy - centerY, 2)) < myData->programSettings.lEnd) || (sqrt(pow(Bx - centerX, 2) + pow(By - centerY, 2)) < myData->programSettings.lEnd) || (sqrt(pow(Ax - centerX, 2) + pow(Ay - centerY, 2)) < myData->programSettings.lEnd) || (sqrt(pow(Bx - Ax, 2) + pow(By - Ay, 2)) < myData->programSettings.lEnd) || (sqrt(pow(Cx - Ax, 2) + pow(Cy - Ay, 2)) < myData->programSettings.lEnd) || (sqrt(pow(Bx - Cx, 2) + pow(By - Cy, 2)) < myData->programSettings.lEnd))
+		return;
+	else
+	{
+		if (thickness > 0)
+			thickness -= 1;
+		rec_count++;
+		/*if(green <= 205)
+		green += 50 / rec_count;
+		if (blue <= 205)
+			blue += 50 / rec_count;
+		red -= 20;*/
+
+		if (green < 150)
+			green += 30;
+		if (green >= 150)
+			red -= 30;
+		blue += 5;
+
+		al_draw_polygon(vert, TRIANGLE_COORDS / 2, ALLEGRO_LINE_JOIN_ROUND, al_map_rgb(red, green, blue), thickness, 2);
+		
+		al_flip_display();
+		al_rest(0.03); 
+
+		generateUniforme(myData, Ax, Ay, Bx, By, centerX, centerY, red, green, blue, thickness, rec_count);
+		generateUniforme(myData, Cx, Cy, Ax, Ay, centerX, centerY, red, green, blue, thickness, rec_count);
+		generateUniforme(myData, Bx, By, Cx, Cy, centerX, centerY, red, green, blue, thickness, rec_count);
+
+		al_flip_display();
+	}
+}
+
+void centerTriangle(parseData* parseData, float vert[MAX_VERT])
+{
+	const float angleConvert = M_PI / 180;
+	float Ax = 0;
+	float Ay = 0;
+
+	float gamma = M_PI - parseData->programSettings.leftAngle * angleConvert - parseData->programSettings.rightAngle * angleConvert;
+
+	float lIzq = parseData->programSettings.lStart*SIZE_ADJUST / sin(gamma) * sin(parseData->programSettings.rightAngle * angleConvert);
+
+	float Bx = parseData->programSettings.lStart*SIZE_ADJUST;
+	float By = 0;
+
+	float Cx = cos(parseData->programSettings.leftAngle * angleConvert) * lIzq;
+	float Cy = -(sin(parseData->programSettings.leftAngle * angleConvert)) * lIzq;
+
+	float centerX = (Ax + Bx + Cx) / 3;
+	float centerY = (Ay + By + Cy) / 3;
+
+	centerX = SCREENWIDTH / 2 - centerX;
+	centerY = SCREENHEIGHT / 2 + DOWNOFFSET - centerY; //No quedara centrado, sino un poco mas abajo por razones esteticas
+
+	vert[0] = Ax + centerX;
+	vert[1] = Ay + centerY;
+	vert[2] = Bx + centerX;
+	vert[3] = By + centerY;
+	vert[4] = Cx + centerX;
+	vert[5] = Cy + centerY;
+
+
 }

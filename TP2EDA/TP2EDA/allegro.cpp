@@ -25,22 +25,38 @@ bool allegroInit(allegroUtils* alUtils)
 		return -1;
 	}
 
-	if (!al_reserve_samples(1)) {
+	if (!al_reserve_samples(4)) {
 		cout << "Falla al reservar samples." << endl;
 		return -1;
 	}
 
-	alUtils->sample = al_load_sample("macintosh_plus.wav");
-	if (!alUtils->sample) {
+	alUtils->sample_mac = al_load_sample("macintosh_plus.wav"); //by Vektroid
+	if (!alUtils->sample_mac) {
 		cout << "Falla al inicializar sample." << endl;
-		al_destroy_sample(alUtils->sample);
+		return -1;
+	}
+
+	alUtils->sample_fart = al_load_sample("quick_fart.wav"); //SoundBible.com
+	if (!alUtils->sample_fart) {
+		cout << "Falla al inicializar sample." << endl;
+		al_destroy_sample(alUtils->sample_mac);
+		return -1;
+	}
+
+	alUtils->sample_ofortuna = al_load_sample("o_fortuna.wav"); //Carl Orff - Carmina Burana
+	if (!alUtils->sample_ofortuna) {
+		cout << "Falla al inicializar sample." << endl;
+		al_destroy_sample(alUtils->sample_mac);
+		al_destroy_sample(alUtils->sample_fart);
 		return -1;
 	}
 
 	if (!al_init_primitives_addon())
 	{
 		cout << "Falla al inicializar primitivas." << endl;
-		al_destroy_sample(alUtils->sample);
+		al_destroy_sample(alUtils->sample_mac);
+		al_destroy_sample(alUtils->sample_fart);
+		al_destroy_sample(alUtils->sample_ofortuna);
 		outcome = false;
 	}
 
@@ -49,7 +65,9 @@ bool allegroInit(allegroUtils* alUtils)
 	{
 		cout << "Falla al inicializar display." << endl;	
 		al_shutdown_primitives_addon();
-		al_destroy_sample(alUtils->sample);
+		al_destroy_sample(alUtils->sample_mac);
+		al_destroy_sample(alUtils->sample_fart);
+		al_destroy_sample(alUtils->sample_ofortuna);
 		outcome = false;
 	}
 
@@ -63,7 +81,9 @@ void allegroDestroy(allegroUtils* alUtils)
 {
 	al_destroy_display(alUtils->display);
 	al_shutdown_primitives_addon();
-	al_destroy_sample(alUtils->sample);
+	al_destroy_sample(alUtils->sample_mac);
+	al_destroy_sample(alUtils->sample_fart);
+	al_destroy_sample(alUtils->sample_ofortuna);
 
 	return;
 

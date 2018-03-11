@@ -46,5 +46,11 @@
     <Media Include="macintosh_plus.wav">
       <Filter>Resource Files</Filter>
     </Media>
+    <Media Include="quick_fart.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="o_fortuna.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>
