@@ -44,9 +44,9 @@ void generatePolygons(parseData* myData, float xo, float yo, float length, int r
 
 		//Achico lado
 		length = (length*(myData->programSettings.lConstant));
-		green -= 20;
-		red -= 10;
-		blue -= 20;
+		green -= 30;
+		red += 35;
+		blue -= 30;
 		if (thickness > 0)
 			thickness -= 1;
 		for (int i = 0; i < myData->programSettings.n; i++)
@@ -131,34 +131,33 @@ void generateMandelbrot(parseData* myData)
 {
 
 	int cont = 0;
-	double Xo = -2.0;    //LES ASIGNAMOS LOS VALORES POR LINEA DE COMANDO, OSEA QUE HAY QUE MODIFICAR ESTO
-	double Xf = 2.0;
-	double Yo = -2.0;
-	double Yf = 2.0;
+	double Xo = -1.0;    //LES ASIGNAMOS LOS VALORES POR LINEA DE COMANDO, OSEA QUE HAY QUE MODIFICAR ESTO
+	double Xf = 1.0;
+	double Yo = -1.0;
+	double Yf = 1.0;
 	int i, j, n;
 
-	std::complex <double> Zo = (Xo, Yo);   //coordenada de origen en el plano complejo
+	std::complex <double> Zo = std::complex <double>(Xo, Yo);   //coordenada de origen en el plano complejo
 
 	for (i = 0; i < X_MAX; i++)
 	{
 		for (j = 0; j < Y_MAX; j++)
 		{
-			n = get_num_it(Zo + (i*X_PASO, j*Y_PASO), Zo + (i*X_PASO, j*Y_PASO), &cont);
+			n = get_num_it(Zo + std::complex<double>(i*X_PASO, j*Y_PASO), Zo + std::complex<double>(i*X_PASO, j*Y_PASO), &cont);
 			cont = 0;
 			if (n == N_MAX)     //diverge -> negro
-				al_draw_filled_rectangle(i, j, i + 1, j + 1, al_map_rgb(0, 0, (int)(N_MAX*pow((N_MAX - n) / N_MAX, 2))));   //hacemos un juego con valores exponenciales (no lineales) para generar un mejor efecto visual
+				al_draw_filled_rectangle(i, j, (i + 1), (j + 1), al_map_rgb(0, 0, (int)(N_MAX*pow((N_MAX - n) / N_MAX, 2))));   //hacemos un juego con valores exponenciales (no lineales) para generar un mejor efecto visual
 			else
-				al_draw_filled_rectangle(i, j, i + 1, j + 1, al_map_rgb((int)(N_MAX - N_MAX * pow((N_MAX - n) / N_MAX, 6)), ((int)(N_MAX - N_MAX * pow((N_MAX - n) / N_MAX, 6))), (int)(N_MAX*pow((N_MAX - n) / N_MAX, 2))));
-
+				al_draw_filled_rectangle(i, j, (i + 1), (j + 1), al_map_rgb((int)(N_MAX - N_MAX * pow((N_MAX - n) / N_MAX, 10)), ((int)(N_MAX - N_MAX * pow((N_MAX - n) / N_MAX, 6))), (int)(N_MAX*pow((N_MAX - n) / N_MAX, 10))));
+			
 		}
 	}
 	al_flip_display();
-	al_rest(10.0);
 }
 
 int get_num_it(std::complex <double> z, std::complex <double> z0, int *cont)
 {
-	if (std::norm(z) >= RADIO || *cont == N_MAX) // CASO BASE
+	if (std::abs(z) >= RADIO || *cont == N_MAX) // CASO BASE
 	{
 		return 0;
 	}

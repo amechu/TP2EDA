@@ -32,7 +32,7 @@ int main(void)      //void mandelbrot(double -2, double 2, double -2, double 2)
    {
        for (j = 0; j < Y_MAX; j++)
        {
-           n = get_num_it(Zo + (i*X_PASO, j*Y_PASO), Zo + (i*X_PASO, j*Y_PASO), &cont);
+           n = get_num_it(Zo + i*X_PASO + j*Y_PASO*I, Zo + (i*X_PASO, j*Y_PASO), &cont);
            cont = 0;
            if(n == N_MAX)     //diverge -> negro
                al_draw_filled_rectangle(i, j, i+1, j+1, al_map_rgb(0,0,(int)(N_MAX*pow((N_MAX - n)/N_MAX,2))));   //hacemos un juego con valores exponenciales (no lineales) para generar un mejor efecto visual

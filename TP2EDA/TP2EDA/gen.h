@@ -5,12 +5,12 @@
 #include <math.h>
 #include <complex>
 
-#define X_MAX	600.0
+#define X_MAX	800.0
 #define Y_MAX	600.0
 #define N_MAX   255.0
-#define X_PASO  ((2 - (-2))/X_MAX)      // EN LUGAR DE 2 Y -2 IRIAN LOS argv[]
-#define Y_PASO  ((2 - (-2))/Y_MAX)
-#define RADIO   2                       // QUE EL RADIO SE MODIFIQUE SEGUN LOS argv[]
+#define X_PASO  ((1 - (-1))/X_MAX)      // EN LUGAR DE 2 Y -2 IRIAN LOS argv[]
+#define Y_PASO  ((1 - (-1))/Y_MAX)
+#define RADIO   1                    // QUE EL RADIO SE MODIFIQUE SEGUN LOS argv[]
 
 #define MAX_VERT 50
 #define SIZE_ADJUST 4 //Por razones de estetica
