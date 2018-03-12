@@ -1,9 +1,10 @@
-#include <stdio.h>
-#include <complex.h>
+/*#include <stdio.h>
+#include <complex>
 #include <math.h>
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_color.h> // NO OLVIDAR AGREGAR EN EL LINKER DEL PROYECTO
 #include <allegro5/allegro_primitives.h> // NO OLVIDAR AGREGAR EN EL LINKER DEL PROYECTO
+
 
 #define X_MAX	600.0
 #define Y_MAX	600.0
@@ -12,48 +13,11 @@
 #define Y_PASO  ((2 - (-2))/Y_MAX)
 #define RADIO   2                       // QUE EL RADIO SE MODIFIQUE SEGUN LOS argv[]
 
-int get_num_it(double complex z, double complex z0, int *cont);
+int get_num_it(std::complex <double> z, std::complex <double> z0, int *cont);
 
 
 int main(void)      //void mandelbrot(double -2, double 2, double -2, double 2)
 {
-    
-    
-    
-    /*********************** INICIALIZO TODO***************************/
-    
-    
-    
-    
-   ALLEGRO_DISPLAY *display = NULL; 
-   if(!al_init()) 
-   {
-          fprintf(stderr, "failed to initialize allegro!\n");
-          return -1;
-   }
- 
-   if(!al_init_primitives_addon())
-   {
-	  fprintf(stderr, "failed to initialize primitives!\n");
-	  return -1;
-   }
-   
-   display = al_create_display(X_MAX, Y_MAX);
- 
-   if(!display) 
-   {
-	  al_shutdown_primitives_addon();
-	  fprintf(stderr, "failed to create display!\n");
-      return -1;
-   }
-   
-	
-   
-   /**********************TODO INICIADO*****************************/
-   
-   
-   al_clear_to_color(al_color_name("black"));
-   al_flip_display();
    
    int cont = 0;
    double Xo = -2.0;    //LES ASIGNAMOS LOS VALORES POR LINEA DE COMANDO, OSEA QUE HAY QUE MODIFICAR ESTO
@@ -62,13 +26,13 @@ int main(void)      //void mandelbrot(double -2, double 2, double -2, double 2)
    double Yf = 2.0;
    int i, j, n;
    
-   double complex Zo = Xo + Yo*I;   //coordenada de origen en el plano complejo
+   std::complex <double> Zo = (Xo, Yo);   //coordenada de origen en el plano complejo
    
    for (i = 0; i < X_MAX; i++)
    {
        for (j = 0; j < Y_MAX; j++)
        {
-           n = get_num_it(Zo + i*X_PASO + j*Y_PASO*I, Zo + i*X_PASO + j*Y_PASO*I, &cont);
+           n = get_num_it(Zo + (i*X_PASO, j*Y_PASO), Zo + (i*X_PASO, j*Y_PASO), &cont);
            cont = 0;
            if(n == N_MAX)     //diverge -> negro
                al_draw_filled_rectangle(i, j, i+1, j+1, al_map_rgb(0,0,(int)(N_MAX*pow((N_MAX - n)/N_MAX,2))));   //hacemos un juego con valores exponenciales (no lineales) para generar un mejor efecto visual
@@ -79,23 +43,17 @@ int main(void)      //void mandelbrot(double -2, double 2, double -2, double 2)
    }
    al_flip_display();
    al_rest(10.0);
-   
-   al_destroy_display(display);
-   al_shutdown_primitives_addon();
     
     return (EXIT_SUCCESS);
 }
 
-int get_num_it(double complex z, double complex z0, int *cont)
+int get_num_it(std::complex <double> z, std::complex <double> z0, int *cont)
 {
-    if (sqrt(creal(z)*creal(z) + cimag(z)*cimag(z)) >= RADIO) // CASO BASE
+    if (std::norm(z) >= RADIO || *cont == N_MAX) // CASO BASE
     {
         return 0;
     }
-    else if (*cont == N_MAX)  // el punto diverge
-    {
-        return 0;   //para sacar todo lo que estuvimos acumulando por las iteraciones
-    }
+
     else                // CASO RECURSIVO
     {
         z = z*z + z0;
@@ -104,3 +62,4 @@ int get_num_it(double complex z, double complex z0, int *cont)
     }
 }
 
+*/

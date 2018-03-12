@@ -30,6 +30,9 @@
     <ClCompile Include="gen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mandelbrot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="parseCmd.h">

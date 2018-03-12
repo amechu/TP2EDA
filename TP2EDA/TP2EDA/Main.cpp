@@ -102,6 +102,7 @@ int main(int argc, char ** argv)
 				}
 				case MANDELBROT:
 				{
+					generateMandelbrot(&parseData);
 					break;
 				}
 			}
