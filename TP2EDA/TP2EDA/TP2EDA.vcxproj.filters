@@ -30,9 +30,6 @@
     <ClCompile Include="gen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Mandelbrot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="parseCmd.h">
@@ -53,6 +50,9 @@
       <Filter>Resource Files</Filter>
     </Media>
     <Media Include="o_fortuna.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="xfiles.wav">
       <Filter>Resource Files</Filter>
     </Media>
   </ItemGroup>

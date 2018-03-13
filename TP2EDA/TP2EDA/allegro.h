@@ -19,6 +19,8 @@ typedef struct
 		ALLEGRO_SAMPLE_ID sampleId_fart;
 		ALLEGRO_SAMPLE* sample_ofortuna;
 		ALLEGRO_SAMPLE_ID sampleId_ofortuna;
+		ALLEGRO_SAMPLE* sample_xfiles;
+		ALLEGRO_SAMPLE_ID sampleId_xfiles;
 
 
 }allegroUtils;

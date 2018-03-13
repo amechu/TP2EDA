@@ -131,7 +131,7 @@ int parseCallback(char *key, char *value, void *userinfo)
 						userInfo->programSettings.lStart = 100;
 						userInfo->programSettings.lEnd = 1;
 						userInfo->programSettings.lConstant = 0.45;
-						userInfo->programSettings.n = 6;
+						userInfo->programSettings.n = 7;
 					}
 					else if (userInfo->programSettings.fractalType == UNIFORME)
 					{
@@ -156,121 +156,60 @@ int parseCallback(char *key, char *value, void *userinfo)
 
 		else if (setsParameter == true) //Busca si la value es correcta y no se escapa del rango
 		{
-			if (value[0] == '0')
+			convertedValue = strtof(value, NULL); //Convierte string numerico a float.
+			switch (temp) //Busca que key ha sido ingresada
 			{
-				switch (temp)
+				case LSTART:
 				{
-					case LSTART:
-					{
-						userInfo->programSettings.lStart = 0;
-						break;
-					}
-					case LEND:
-					{
-						userInfo->programSettings.lEnd = 0;
-						break;
-					}
-					case LCONSTANT:
-					{
-						userInfo->programSettings.lConstant = 0;
-						break;
-					}
-					case LEFTANGLE:
-					{
-						userInfo->programSettings.leftAngle = 0;
-						break;
-					}
-					case RIGHTANGLE:
-					{
-						userInfo->programSettings.rightAngle = 0;
-						break;
-					}
-					case XO:
-					{
-						userInfo->programSettings.xo = 0;
-						break;
-					}
-					case YO:
-					{
-						userInfo->programSettings.yo = 0;
-						break;
-					}
-					case XF:
-					{
-						userInfo->programSettings.xf = 0;
-						break;
-					}
-					case YF:
-					{
-						userInfo->programSettings.yf = 0;
-						break;
-					}
-					case N:
-					{
-						userInfo->programSettings.n = 0;
-						break;
-					}
+					userInfo->programSettings.lStart = convertedValue;
+					break;
+				}
+				case LEND:
+				{
+					userInfo->programSettings.lEnd = convertedValue;
+					break;
+				}
+				case LCONSTANT:
+				{
+					userInfo->programSettings.lConstant = convertedValue;
+					break;
+				}
+				case LEFTANGLE:
+				{
+					userInfo->programSettings.leftAngle = convertedValue;
+					break;
+				}
+				case RIGHTANGLE:
+				{
+					userInfo->programSettings.rightAngle = convertedValue;
+					break;
+				}
+				case XO:
+				{
+					userInfo->programSettings.xo = convertedValue;
+					break;
+				}
+				case YO:
+				{
+					userInfo->programSettings.yo = convertedValue;
+					break;
+				}
+				case XF:
+				{
+					userInfo->programSettings.xf = convertedValue;
+					break;
+				}
+				case YF:
+				{
+					userInfo->programSettings.yf = convertedValue;
+					break;
+				}
+				case N:
+				{
+					userInfo->programSettings.n = convertedValue;
+					break;
 				}
 			}
-			else if (convertedValue = atof(value)) //Convierte numero a floating point
-			{
-				switch (temp) //Busca que key ha sido ingresada
-				{
-					case LSTART:
-					{
-						userInfo->programSettings.lStart = convertedValue;
-						break;
-					}
-					case LEND:
-					{
-						userInfo->programSettings.lEnd = convertedValue;
-						break;
-					}
-					case LCONSTANT:
-					{
-						userInfo->programSettings.lConstant = convertedValue;
-						break;
-					}
-					case LEFTANGLE:
-					{
-						userInfo->programSettings.leftAngle = convertedValue;
-						break;
-					}
-					case RIGHTANGLE:
-					{
-						userInfo->programSettings.rightAngle = convertedValue;
-						break;
-					}
-					case XO:
-					{
-						userInfo->programSettings.xo = convertedValue;
-						break;
-					}
-					case YO:
-					{
-						userInfo->programSettings.yo = convertedValue;
-						break;
-					}
-					case XF:
-					{
-						userInfo->programSettings.xf = convertedValue;
-						break;
-					}
-					case YF:
-					{
-						userInfo->programSettings.yf = convertedValue;
-						break;
-					}
-					case N:
-					{
-						userInfo->programSettings.n = convertedValue;
-						break;
-					}
-				}
-			}
-
-			else
-				equal = -1;
 		}
 	}
 

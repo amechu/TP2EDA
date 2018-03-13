@@ -127,7 +127,6 @@
     <ClCompile Include="allegro.cpp" />
     <ClCompile Include="gen.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Mandelbrot.cpp" />
     <ClCompile Include="parseCmd.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +138,7 @@
     <Media Include="macintosh_plus.wav" />
     <Media Include="o_fortuna.wav" />
     <Media Include="quick_fart.wav" />
+    <Media Include="xfiles.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

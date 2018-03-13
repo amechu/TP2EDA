@@ -51,12 +51,22 @@ bool allegroInit(allegroUtils* alUtils)
 		return -1;
 	}
 
+	alUtils->sample_xfiles = al_load_sample("xfiles.wav"); //Xfiles
+	if (!alUtils->sample_xfiles) {
+		cout << "Falla al inicializar sample." << endl;
+		al_destroy_sample(alUtils->sample_mac);
+		al_destroy_sample(alUtils->sample_fart);
+		al_destroy_sample(alUtils->sample_ofortuna);
+		return -1;
+	}
+
 	if (!al_init_primitives_addon())
 	{
 		cout << "Falla al inicializar primitivas." << endl;
 		al_destroy_sample(alUtils->sample_mac);
 		al_destroy_sample(alUtils->sample_fart);
 		al_destroy_sample(alUtils->sample_ofortuna);
+		al_destroy_sample(alUtils->sample_xfiles);
 		outcome = false;
 	}
 
@@ -68,6 +78,7 @@ bool allegroInit(allegroUtils* alUtils)
 		al_destroy_sample(alUtils->sample_mac);
 		al_destroy_sample(alUtils->sample_fart);
 		al_destroy_sample(alUtils->sample_ofortuna);
+		al_destroy_sample(alUtils->sample_xfiles);
 		outcome = false;
 	}
 
@@ -84,7 +95,7 @@ void allegroDestroy(allegroUtils* alUtils)
 	al_destroy_sample(alUtils->sample_mac);
 	al_destroy_sample(alUtils->sample_fart);
 	al_destroy_sample(alUtils->sample_ofortuna);
-
+	al_destroy_sample(alUtils->sample_xfiles);
 	return;
 
 }
